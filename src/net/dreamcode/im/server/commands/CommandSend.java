@@ -6,12 +6,6 @@ import net.dreamcode.im.server.modules.User;
 
 public class CommandSend implements Command
 {
-	IMServer parent;
-	
-	public CommandSend(IMServer parent)
-	{
-		this.parent = parent;
-	}
 	
 	@Override
 	public void onCommand(String[] args, User executor, IMServer server)
@@ -26,7 +20,7 @@ public class CommandSend implements Command
 				message += args[i];
 			}
 			
-			User targetUser = this.parent.getUserByID(targetID);
+			User targetUser = server.getUserByID(targetID);
 			
 			try
 			{

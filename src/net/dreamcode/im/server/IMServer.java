@@ -11,8 +11,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
+import net.dreamcode.im.server.commands.CommandBroadcast;
 import net.dreamcode.im.server.commands.CommandHandler;
 import net.dreamcode.im.server.commands.CommandSend;
+import net.dreamcode.im.server.commands.CommandShow;
 import net.dreamcode.im.server.db.DBManager;
 import net.dreamcode.im.server.modules.User;
 import net.dreamcode.im.server.plugins.PluginManager;
@@ -101,9 +103,13 @@ public class IMServer
 			try
 			{
 				log("Adding default commands...", LogLevel.INFO);
-				CommandSend cmdSend = new CommandSend(this);
+				CommandSend cmdSend = new CommandSend();
+				CommandBroadcast cmdBroadcast = new CommandBroadcast();
+				CommandShow cmdShow = new CommandShow();
 				
 				commandHandler.addListener(cmdSend);
+				commandHandler.addListener(cmdBroadcast);
+				commandHandler.addListener(cmdShow);
 
 				log("Loading custom features...", LogLevel.INFO);
 
@@ -176,6 +182,11 @@ public class IMServer
 	public User getUserByID(String uid)
 	{
 		return this.users.get(uid);
+	}
+	
+	public ArrayList<User> getOnlineUsers()
+	{
+		return new ArrayList<>(this.users.values());
 	}
 	
 	public void registerUser(User user, ClientHandler handler)
